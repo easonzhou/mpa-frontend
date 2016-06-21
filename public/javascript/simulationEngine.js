@@ -88,10 +88,6 @@ SimulationEngine.prototype.updatedY = function(d) {
     return map.projection(d.longlat)[1] - this.widthHeightWithZoomLevel(d) / 2; 
 };
 
-SimulationEngine.prototype.changeIcon = function(d){
-    return "/images/ship/" + "ship" + (Math.floor(d.deg) % 360) + ".png";
-};
-
 SimulationEngine.prototype.widthHeightWithZoomLevel = function(d){
     //var zoomLevel = map.gm.map.getZoom();
     //var zoomDiff = zoomLevel - map.defaultZoomLevel;					

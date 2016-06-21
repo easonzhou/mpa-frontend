@@ -336,7 +336,7 @@ var sgGisMap = sgGisMap || {
 			context = canvasLayer.canvas.getContext('2d');
 			this.canvasDataContainer = d3.select("body").append("custom");
 			this.image = new Image();
-			this.image.src = '/images/ship/ship_sprites.png';
+			this.image.src = 'images/ship/ship_sprites.png';
 			//this.image.src = '/images/ship/ship0.png';
 			function resize() {
 				// nothing to do here
