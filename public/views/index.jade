@@ -1,12 +1,19 @@
 extends layouts/layout.jade
 
 block con
-     link(rel='stylesheet', href='build/css/map.min.css')
-     #gmap
-     .overlap 
-         button.btn.btn-default.btn-backward.glyphicon.glyphicon-backward(aria-label="back") 
-         button.btn.btn-default.btn-play.glyphicon.glyphicon-pause(aria-label="play") 
-         button.btn.btn-default.btn-forward.glyphicon.glyphicon-forward(aria-label="forward") 
-         button.btn.btn-default.btn-fast-forward.glyphicon.glyphicon-fast-forward(aria-label="fast-forward") 
-     script(type='text/javascript', src='https://maps.google.com/maps/api/js?sensor=true')
-     script(src='build/js/client.min.js')  
+    link(rel='stylesheet', href='build/css/login.min.css')
+    .container
+      .main
+        h2 MPA Login Page 
+        hr
+        form#form_id(method='post', name='myform')
+          label User Name :
+          br
+          input#username(type='text', name='username')
+          br
+          label Password :
+          br
+          input#password(type='password', name='password')
+          br
+          input#submit(type='button', value='Login')
+    script(src='build/js/login.min.js')  
