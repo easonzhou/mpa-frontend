@@ -12,16 +12,40 @@ var gulp = require('gulp'),
     jshint = require('gulp-jshint'),
     gulp   = require('gulp');
 
-gulp.task('styles',function(){
-  gulp.src('./public/stylesheets/*.scss')
+gulp.task('map_styles',function(){
+  gulp.src('./public/stylesheets/map/*.scss')
     .pipe(sass())
     .pipe(autoprefixer('last 2 version'))
-    .pipe(concat('main.css'))
+    .pipe(concat('map.css'))
     .pipe(gulp.dest('./public/build/css'))
     .pipe(rename({suffix: '.min'}))
     .pipe(minifycss())
     .pipe(gulp.dest('./public/build/css'))
-    .pipe(notify('Style task complete'))
+    .pipe(notify('Map Style task complete'))
+})
+
+gulp.task('layout_styles',function(){
+  gulp.src('./public/stylesheets/layout/*.scss')
+    .pipe(sass())
+    .pipe(autoprefixer('last 2 version'))
+    .pipe(concat('layout.css'))
+    .pipe(gulp.dest('./public/build/css'))
+    .pipe(rename({suffix: '.min'}))
+    .pipe(minifycss())
+    .pipe(gulp.dest('./public/build/css'))
+    .pipe(notify('Layout Style task complete'))
+})
+
+gulp.task('login_styles',function(){
+  gulp.src('./public/stylesheets/login/*.scss')
+    .pipe(sass())
+    .pipe(autoprefixer('last 2 version'))
+    .pipe(concat('login.css'))
+    .pipe(gulp.dest('./public/build/css'))
+    .pipe(rename({suffix: '.min'}))
+    .pipe(minifycss())
+    .pipe(gulp.dest('./public/build/css'))
+    .pipe(notify('Login Style task complete'))
 })
 
 gulp.task('scripts',function(){
@@ -48,7 +72,7 @@ gulp.task('templates', function() {
 
 
 gulp.task('clean',function(cb){
-  del(['./public/build'],cb)
+  del(['./public/build/css'],cb)
 })
 
 gulp.task('lint', function(cb, err) {
@@ -59,12 +83,14 @@ gulp.task('lint', function(cb, err) {
 });
 
 gulp.task('default',['clean', 'lint'],function(){
-  gulp.start('styles','scripts','templates');
+  gulp.start('login_styles','layout_styles','map_styles', 'scripts','templates');
   //gulp.start('styles','templates');
 })
 
 gulp.task('watch',function(){
-  gulp.watch('./public/stylesheets/*.scss',['styles']);
+  gulp.watch('./public/stylesheets/layout/*.scss',['layout_styles']);
+  gulp.watch('./public/stylesheets/login/*.scss',['login_styles']);
+  gulp.watch('./public/stylesheets/map/*.scss',['map_styles']);
   gulp.watch('./public/javascript/*.js', ['lint']);
   //gulp.watch('./public/javascript/*.js',['scripts']);
   gulp.watch('./public/views/**/*.jade',['templates']);

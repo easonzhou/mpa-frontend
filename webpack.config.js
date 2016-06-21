@@ -5,10 +5,14 @@ var path = require('path');
 module.exports = {
   context: path.join(__dirname, "public"),
   devtool: debug ? "inline-sourcemap" : null,
-  entry: "./javascript/client.js",
+  entry: {
+      client: "./javascript/client.js",
+      main: "./javascript/main.js",
+      login: "./javascript/login.js"
+  },
   output: {
-    path: __dirname + "/public/",
-    filename: "client.min.js"
+    path: __dirname + "/public/build/js",
+    filename: "[name].min.js"
   },
   plugins: debug ? [] : [
     new webpack.optimize.DedupePlugin(),

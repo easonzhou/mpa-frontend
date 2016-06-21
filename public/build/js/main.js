@@ -703,7 +703,51 @@ map.drawSgGisMap(function(){
 });
 
 
-      //document.addEventListener('DOMContentLoaded', init, false);
+var attempt = 3; //Variable to count number of attempts
+var $ = require('jquery');
+
+//Below function Executes on click of login button
+function validate(){
+    console.log("validate");
+	var username = document.getElementById("username").value;
+	var password = document.getElementById("password").value;
+
+	if ( username == "Formget" && password == "formget#123"){
+		alert ("Login successfully");
+		window.location = "index.html"; //redirecting to other page
+		return false;
+	}
+	else{
+		attempt --;//Decrementing by one
+		alert("You have left "+attempt+" attempt;");
+		
+		//Disabling fields after 3 attempts
+		if( attempt == 0){
+			document.getElementById("username").disabled = true;
+			document.getElementById("password").disabled = true;
+			document.getElementById("submit").disabled = true;
+			return false;
+		}
+	}
+}
+
+$('#submit').click(validate);
+
+var $ = require('jquery');
+
+$(".openbtn").click(function (){
+    document.getElementById("mySidenav").style.width = "250px";
+    document.getElementById("main").style.marginLeft = "250px";
+    $(".overlap").css("left", "0px");
+
+});
+
+$(".closebtn").click(function (){
+    document.getElementById("mySidenav").style.width = "0";
+    document.getElementById("main").style.marginLeft= "0";
+    $(".overlap").css("left", "-180px");
+    $('.overlap').removeAttr("style");
+});    
 
 //! moment.js
 //! version : 2.13.0

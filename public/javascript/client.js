@@ -14,15 +14,3 @@ map.drawSgGisMap(function(){
 	map.initCanvasOverlay();
 });
 
-$(".openbtn").click(function (){
-    document.getElementById("mySidenav").style.width = "250px";
-    document.getElementById("main").style.marginLeft = "250px";
-    document.getElementsByClassName('overlap')[0].style.left = "0px";
-});
-
-$(".closebtn").click(function (){
-    document.getElementById("mySidenav").style.width = "0";
-    document.getElementById("main").style.marginLeft= "0";
-    document.getElementsByClassName('overlap')[0].style.left = "-180px";
-});    
-
