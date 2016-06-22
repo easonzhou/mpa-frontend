@@ -10,10 +10,12 @@ var gulp = require('gulp'),
     notify = require('gulp-notify'),
     del = require('del'),
     jshint = require('gulp-jshint'),
-    gulp   = require('gulp');
+    gulp   = require('gulp'),
+    plumber = require('gulp-plumber');
 
 gulp.task('map_styles',function(){
   gulp.src('./public/stylesheets/map/*.scss')
+    .pipe(plumber())
     .pipe(sass())
     .pipe(autoprefixer('last 2 version'))
     .pipe(concat('map.css'))
@@ -26,6 +28,7 @@ gulp.task('map_styles',function(){
 
 gulp.task('layout_styles',function(){
   gulp.src('./public/stylesheets/layout/*.scss')
+    .pipe(plumber())
     .pipe(sass())
     .pipe(autoprefixer('last 2 version'))
     .pipe(concat('layout.css'))
@@ -38,6 +41,7 @@ gulp.task('layout_styles',function(){
 
 gulp.task('login_styles',function(){
   gulp.src('./public/stylesheets/login/*.scss')
+    .pipe(plumber())
     .pipe(sass())
     .pipe(autoprefixer('last 2 version'))
     .pipe(concat('login.css'))
@@ -50,6 +54,7 @@ gulp.task('login_styles',function(){
 
 gulp.task('scripts',function(){
   gulp.src('./public/javascript/*.js')
+    .pipe(plumber())
     .pipe(concat('main.js'))
     .pipe(gulp.dest('./public/build/js'))
     .pipe(uglify())
@@ -63,6 +68,7 @@ gulp.task('templates', function() {
     var YOUR_LOCALS = {};
 
     gulp.src('./public/views/**/*.jade')
+    .pipe(plumber())
     .pipe(jade({
         locals: YOUR_LOCALS
     }))
@@ -77,6 +83,7 @@ gulp.task('clean',function(cb){
 
 gulp.task('lint', function(cb, err) {
   gulp.src('./public/javascript/*.js')
+    .pipe(plumber())
     .pipe(jshint())
     .pipe(jshint.reporter('default'));
   cb(err);
@@ -86,6 +93,7 @@ gulp.task('default',['clean', 'lint'],function(){
   gulp.start('login_styles','layout_styles','map_styles', 'scripts','templates');
   //gulp.start('styles','templates');
 })
+
 
 gulp.task('watch',function(){
   gulp.start('login_styles','layout_styles','map_styles', 'scripts','templates');

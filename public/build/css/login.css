@@ -44,15 +44,3 @@
   width: 380px;
   margin-left: auto;
   margin-right: auto; }
-
-#footer {
-  color: #ddd;
-  width: 100%;
-  height: 20px;
-  bottom: 50px;
-  position: absolute; }
-
-#footer p {
-  margin-left: auto;
-  margin-right: auto;
-  width: 200px; }

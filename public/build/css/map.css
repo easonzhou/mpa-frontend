@@ -63,7 +63,8 @@ html, body {
   height: 100%;
   width: 100%;
   background: #eeeeee;
-  z-index: 1; }
+  z-index: 1;
+  margin-top: -53px; }
 
 .navbar {
   margin-bottom: 0px; }

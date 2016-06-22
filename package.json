@@ -33,7 +33,7 @@
     "gulp-concat": "~2.6.0",
     "gulp-imagemin": "~2.3.0",
     "gulp-jade": "~1.1.0",
-    "gulp-jshint": "~1.11.2",
+    "gulp-jshint": "^1.11.2",
     "gulp-livereload": "~3.8.0",
     "gulp-minify-css": "~1.2.1",
     "gulp-notify": "~2.2.0",
@@ -49,7 +49,7 @@
     "grunt-contrib-watch": "^1.0.0",
     "grunt-contrib-concat": "^1.0.1",
     "jshint": "^2.9.2",
-    "gulp-jshint": "^1.11.2"
+    "gulp-plumber": "^1.1.0"
   },
   "repository": {},
   "engines": {
