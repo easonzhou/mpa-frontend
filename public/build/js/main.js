@@ -702,10 +702,18 @@ map.drawSgGisMap(function(){
 	map.initCanvasOverlay();
 });
 
+$('.title').text('Sense Making');
 
-var attempt = 3; //Variable to count number of attempts
 var $ = require('jquery');
+$('.title').text('ETA Prediction');
 
+var $ = require('jquery');
+$('.title').text('High Utilization');
+
+var $ = require('jquery');
+$('form').submit(false);
+
+ 
 //Below function Executes on click of login button
 function validate(){
 	var username = document.getElementById("username").value;
@@ -713,12 +721,25 @@ function validate(){
     
     $.ajax({
         type : "POST",
-        url : "checkLogin",
+        url : "http://localhost:8080/SAFER_REST/checkLogin",
         dataType: 'json',
         data: { userId : username, pass: password},
         success : function(data) {
             var len = data.length;        
-            console.log(data);
+            if (data.hasOwnProperty('error')) {
+                $(".alert-danger").show("slow");
+                return false;
+            }
+            if( data.isValidLogin == true ) {
+                localStorage.setItem('userId', data.userId);
+                localStorage.setItem('userModules', data.userModules);
+		        window.location = "map.html"; //redirecting to other page
+		        return false;
+            } else {
+                $(".alert-warning").show("slow");
+		        return false;
+            }
+
         }
     });
 
@@ -742,6 +763,8 @@ function validate(){
 }
 
 $('#submit').click(validate);
+$('.title').text('SAFER');
+$('.title').css("width", "100px");
 
 var $ = require('jquery');
 
@@ -758,6 +781,14 @@ $(".closebtn").click(function (){
     $(".overlap").css("left", "-180px");
     $('.overlap').removeAttr("style");
 });    
+
+if(localStorage.length)
+    $('#login').text('Logout');
+
+$('#login').click(function() {
+    localStorage.clear();
+    window.location = "login.html";
+})
 
 //! moment.js
 //! version : 2.13.0
@@ -5137,7 +5168,7 @@ var sgGisMap = sgGisMap || {
 			context = canvasLayer.canvas.getContext('2d');
 			this.canvasDataContainer = d3.select("body").append("custom");
 			this.image = new Image();
-			this.image.src = '/images/ship/ship_sprites.png';
+			this.image.src = 'images/ship/ship_sprites.png';
 			//this.image.src = '/images/ship/ship0.png';
 			function resize() {
 				// nothing to do here
@@ -5325,10 +5356,6 @@ SimulationEngine.prototype.updatedX = function(d) {
 
 SimulationEngine.prototype.updatedY = function(d) {
     return map.projection(d.longlat)[1] - this.widthHeightWithZoomLevel(d) / 2; 
-};
-
-SimulationEngine.prototype.changeIcon = function(d){
-    return "/images/ship/" + "ship" + (Math.floor(d.deg) % 360) + ".png";
 };
 
 SimulationEngine.prototype.widthHeightWithZoomLevel = function(d){

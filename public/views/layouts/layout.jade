@@ -12,8 +12,18 @@ html
     #mySidenav.sidenav
          a.closebtn(href='javascript:void(0)') ×
          a(href='map.html') Sense Making
+         hr
          a(href='eta.html') ETA Prediction
-         a(href='highUtil.html') High utilization Analytics
+         hr
+         a(href='highUtil.html') High utilization
+         hr
+         a(href='#') Alerts
+         hr
+         a(href='#') Reports
+         hr
+         a#login(href='/' disabled="disabled") Login 
+         #footer 
+            p A Collabration between MPA & IBM @ alpha version
     
     #main
       nav.navbar.navbar-default
@@ -25,16 +35,18 @@ html
                span.icon-bar
                span.icon-bar
                span.icon-bar
-             a.navbar-brand(href='#') 
+             a.navbar-brand 
                span.openbtn ☰  
-             .time-panel.verticalLine
+             //.time-panel.verticalLine
                h5.time-display-date 
                h5.time-display-time
+
+             .title
                         // Collect the nav links, forms, and other content for toggling
            #bs-example-navbar-collapse-1.collapse.navbar-collapse
 
       block con
-
+        
     // Latest compiled and minified JavaScript
     //script(src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js')
     //script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js', integrity='sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS', crossorigin='anonymous')

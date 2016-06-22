@@ -8,7 +8,9 @@ module.exports = {
   entry: {
       client: "./javascript/client.js",
       main: "./javascript/main.js",
-      login: "./javascript/login.js"
+      login: "./javascript/login.js",
+      highUtil: "./javascript/highUtil.js",
+      eta: "./javascript/eta.js",
   },
   output: {
     path: __dirname + "/public/build/js",

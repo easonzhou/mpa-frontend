@@ -14,3 +14,4 @@ map.drawSgGisMap(function(){
 	map.initCanvasOverlay();
 });
 
+$('.title').text('Sense Making');

@@ -13,3 +13,11 @@ $(".closebtn").click(function (){
     $(".overlap").css("left", "-180px");
     $('.overlap').removeAttr("style");
 });    
+
+if(localStorage.length)
+    $('#login').text('Logout');
+
+$('#login').click(function() {
+    localStorage.clear();
+    window.location = "login.html";
+})
