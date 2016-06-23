@@ -14,10 +14,3 @@ $(".closebtn").click(function (){
     $('.overlap').removeAttr("style");
 });    
 
-if(localStorage.length)
-    $('#login').text('Logout');
-
-$('#login').click(function() {
-    localStorage.clear();
-    window.location = "login.html";
-})

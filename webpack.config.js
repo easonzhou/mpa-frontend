@@ -11,6 +11,7 @@ module.exports = {
       login: "./javascript/login.js",
       highUtil: "./javascript/highUtil.js",
       eta: "./javascript/eta.js",
+      interceptor: "./javascript/interceptor.js",
   },
   output: {
     path: __dirname + "/public/build/js",

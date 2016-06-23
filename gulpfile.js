@@ -68,7 +68,6 @@ gulp.task('templates', function() {
     var YOUR_LOCALS = {};
 
     gulp.src('./public/views/**/*.jade')
-    .pipe(plumber())
     .pipe(jade({
         locals: YOUR_LOCALS
     }))

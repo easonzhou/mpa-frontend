@@ -15,3 +15,4 @@ map.drawSgGisMap(function(){
 });
 
 $('.title').text('Sense Making');
+

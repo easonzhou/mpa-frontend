@@ -787,7 +787,7 @@ if(localStorage.length)
 
 $('#login').click(function() {
     localStorage.clear();
-    window.location = "login.html";
+    window.location = "index.html";
 })
 
 //! moment.js
@@ -5565,7 +5565,6 @@ SimulationEngine.prototype.animate = function(data, minUnixSeconds, maxUnixSecon
         this.maxUnixSeconds = maxUnixSeconds;
     else
         this.maxUnixSeconds = data.maxUnixSeconds;
-    console.log(data.hangout);
     this.cohangout = data.hangout;
     this.transponder = data.transponder;
     this.speeding = data.speeding;
