@@ -295,7 +295,6 @@ SimulationEngine.prototype.animate = function(data, minUnixSeconds, maxUnixSecon
         this.maxUnixSeconds = maxUnixSeconds;
     else
         this.maxUnixSeconds = data.maxUnixSeconds;
-    console.log(data.hangout);
     this.cohangout = data.hangout;
     this.transponder = data.transponder;
     this.speeding = data.speeding;
