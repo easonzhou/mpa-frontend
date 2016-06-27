@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hello WebSocket</title>
+    <script src="build/js/sockjs.min.js"></script>
+    <script src="build/js/stomp.min.js"></script>
+    <script src="build/js/jquery.min.js"></script>
+    <script type="text/javascript">
+        var stompClient = null;
+        
+        function setConnected(connected) {
+            document.getElementById('connect').disabled = connected;
+            document.getElementById('disconnect').disabled = !connected;
+            /*document.getElementById('conversationDiv').style.visibility = connected ? 'visible' : 'hidden';
+            document.getElementById('response').innerHTML = '';*/
+        }
+
+        function connect() {
+            var socket = new SockJS('/SAFER_REST/vmimReal');
+            stompClient = Stomp.over(socket);
+            stompClient.connect({}, function(frame) {
+                setConnected(true);
+                console.log('Connected: ' + frame);
+                stompClient.subscribe('/topic/vmim', function(vmim){
+                	var vmimJSON = JSON.parse(vmim.body);
+                    $("#table").find("tr:gt(0)").remove();
+                    var table = $("#table tbody");
+    				$.each(vmimJSON.vmimData, function(idx, elem){
+    					table.append("<tr><td>"+elem.aisIMO+"</td><td>"+elem.mmsi+"</td>   <td>"+elem.aisLat+"</td> <td>" + elem.aisLon + "</td></tr>");
+    				});
+                });
+            });
+        }
+
+        function disconnect() {
+            if (stompClient != null) {
+                stompClient.disconnect();
+            }
+            setConnected(false);
+            console.log("Disconnected");
+        }
+
+       /*  function sendName() {
+            var name = document.getElementById('name').value;
+            stompClient.send("/app/hello", {}, name);
+        } */
+
+       /*  function showGreeting(message) {
+            var response = document.getElementById('response');
+            var p = document.createElement('p');
+            p.style.wordWrap = 'break-word';
+            p.appendChild(document.createTextNode(message));
+            response.appendChild(p);
+        } */
+    </script>
+</head>
+<body onload="disconnect()">
+<noscript><h2 style="color: #ff0000">Seems your browser doesn't support Javascript! Websocket relies on Javascript being enabled. Please enable
+    Javascript and reload this page!</h2></noscript>
+<div>
+    <div>
+        <button id="connect" onclick="connect();">Connect</button>
+        <button id="disconnect" disabled="disabled" onclick="disconnect();">Disconnect</button>
+    </div>
+    <!-- <div id="conversationDiv">
+        <label>What is your name?</label><input type="text" id="name" />
+        <button id="sendName" onclick="sendName();">Send</button>
+        <p id="response"></p>
+    </div> -->
+    <table id = "table" border="1">
+  <thead>
+    <tr>
+      <th width="100">AIS IMO</th>
+      <th width="100">MMSI</th>
+      <th width="100">LAT</th>
+      <th width="100">LONG</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr id="tt">
+    </tr>
+   </tbody>
+</table>
+</div>
+</body>
+</html>
