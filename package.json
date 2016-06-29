@@ -21,7 +21,9 @@
     "moment": "^2.13.0",
     "async": "^2.0.0-rc.5",
     "http": "0.0.0",
-    "path": "^0.12.7"
+    "path": "^0.12.7",
+    "heatmap.js": "^2.0.2",
+    "leaflet": "^0.7.7"
   },
   "devDependencies": {
     "webpack": "^1.13.1",

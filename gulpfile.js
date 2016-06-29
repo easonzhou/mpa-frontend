@@ -52,6 +52,19 @@ gulp.task('login_styles',function(){
     .pipe(notify('Login Style task complete'))
 })
 
+gulp.task('highUtil_styles',function(){
+  gulp.src('./public/stylesheets/highUtil/*.scss')
+    .pipe(plumber())
+    .pipe(sass())
+    .pipe(autoprefixer('last 2 version'))
+    .pipe(concat('highUtil.css'))
+    .pipe(gulp.dest('./public/build/css'))
+    .pipe(rename({suffix: '.min'}))
+    .pipe(minifycss())
+    .pipe(gulp.dest('./public/build/css'))
+    .pipe(notify('HighUtil Style task complete'))
+})
+
 gulp.task('scripts',function(){
   gulp.src('./public/javascript/*.js')
     .pipe(plumber())
@@ -89,16 +102,17 @@ gulp.task('lint', function(cb, err) {
 });
 
 gulp.task('default',['clean', 'lint'],function(){
-  gulp.start('login_styles','layout_styles','map_styles', 'scripts','templates');
+  gulp.start('login_styles','layout_styles','map_styles', 'highUtil_styles', 'scripts','templates');
   //gulp.start('styles','templates');
 })
 
 
 gulp.task('watch',function(){
-  gulp.start('login_styles','layout_styles','map_styles', 'scripts','templates');
+  gulp.start('login_styles','layout_styles','map_styles', 'highUtil_styles', 'scripts','templates');
   gulp.watch('./public/stylesheets/layout/*.scss',['layout_styles']);
   gulp.watch('./public/stylesheets/login/*.scss',['login_styles']);
   gulp.watch('./public/stylesheets/map/*.scss',['map_styles']);
+  gulp.watch('./public/stylesheets/highUtil/*.scss',['highUtil_styles']);
   gulp.watch('./public/javascript/*.js', ['lint']);
   //gulp.watch('./public/javascript/*.js',['scripts']);
   gulp.watch('./public/views/**/*.jade',['templates']);

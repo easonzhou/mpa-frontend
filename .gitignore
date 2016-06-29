@@ -2,9 +2,11 @@
 node_modules/*
 *.swp
 *.swo
+*.swn
 /bin/
 target
 target/*
 target/**/*
 .classpath
 .project
+npm-debug.log
