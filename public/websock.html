@@ -26,7 +26,7 @@
                     $("#table").find("tr:gt(0)").remove();
                     var table = $("#table tbody");
     				$.each(vmimJSON.vmimData, function(idx, elem){
-    					table.append("<tr><td>"+elem.aisIMO+"</td><td>"+elem.mmsi+"</td>   <td>"+elem.aisLat+"</td> <td>" + elem.aisLon + "</td></tr>");
+    					table.append("<tr><td>"+elem.trackId+"</td><td>"+elem.aisIMO+"</td><td>"+elem.mmsi+"</td>   <td>"+elem.latDeg+"</td> <td>" + elem.longDeg + "</td></tr>");
     				});
                 });
             });
@@ -70,6 +70,7 @@
     <table id = "table" border="1">
   <thead>
     <tr>
+      <th width="100">TRACK ID</th>
       <th width="100">AIS IMO</th>
       <th width="100">MMSI</th>
       <th width="100">LAT</th>
