@@ -5,20 +5,7 @@ require('heatmap.js');
 var HeatmapOverlay = require('leaflet-heatmap.js');
 var d3 = require('d3');
 
-
-function setupHeatMapLayer(data, maxValue) {
-	console.log("setupHeatMap");
-	var testData = {
-		max: maxValue,
-		data: data
-	};
-	var baseLayer = L.tileLayer(
-			'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
-			attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>',
-			maxZoom: 18
-			}
-	);
-
+function initiateHeatMapLayer () {
 	var cfg = {
 		// radius should be small ONLY if scaleRadius is true (or small radius is intended)
 		"radius": .01,
@@ -37,8 +24,48 @@ function setupHeatMapLayer(data, maxValue) {
 		valueField: 'count'
 	};
 
-
 	var heatmapLayer = new HeatmapOverlay(cfg);
+    return heatmapLayer;
+}
+
+function heatMapDataHelper(data) {
+	console.log("setupHeatMap");
+    var max = 0;
+    for (var i = 0; i < data.length; i++) {
+        if(data[i]['count'] > max)
+            max = data[i]['count'];
+    }
+
+	var testData = {
+		max: max,
+		data: data
+	};
+
+    return testData;
+}
+
+d3.csv('data/congestion_location.csv', function(data) {
+    var timeIndex = 0;
+    var heatmapLayer = initiateHeatMapLayer();
+	for(var i = 0; i < data.length; i++) {
+		data[i]['count'] = parseFloat(data[i]['count']);
+		data[i]['lat'] = parseFloat(data[i]['lat']);
+		data[i]['lng'] = parseFloat(data[i]['lng']);
+	}
+
+    var stData = d3.nest()
+        .key(function(d) { return d.time })
+        .entries(data)
+        .map(function (d) {
+            return d.values;
+        });
+
+	var baseLayer = L.tileLayer(
+			'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
+			attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>',
+			maxZoom: 18
+			}
+	);
 
 	var map = new L.Map('map', {
 		//center: new L.LatLng(25.6586, -80.3568),
@@ -47,21 +74,13 @@ function setupHeatMapLayer(data, maxValue) {
 		layers: [baseLayer, heatmapLayer]
 	});
 
-	heatmapLayer.setData(testData);
+	heatmapLayer.setData(heatMapDataHelper(stData[timeIndex]));
 
-	// make accessible for debugging
-	layer = heatmapLayer;
-}
-
-d3.csv('data/congestion_location_onetime.csv', function(data) {
-	var maxCount = 0;
-	for(var i = 0; i < data.length; i++) {
-		data[i]['count'] = parseFloat(data[i]['CumDensity']);
-		data[i]['lat'] = parseFloat(data[i]['lat']);
-		data[i]['lng'] = parseFloat(data[i]['long']);
-		if(data[i]['count'] > maxCount)
-			maxCount = data[i]['count'];
-	}
-	console.log(data);
-	setupHeatMapLayer(data, maxCount);
+    setInterval(function(d){
+        timeIndex++;
+        if (timeIndex > stData.length - 1)
+            timeIndex = 0;
+        heatmapLayer.setData(heatMapDataHelper(stData[timeIndex]));
+    }, 1000);
 });
+

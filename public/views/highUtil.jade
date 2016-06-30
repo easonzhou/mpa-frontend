@@ -2,6 +2,11 @@ extends layouts/layout.jade
 
 block con
     link(rel='stylesheet', href='http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css')
-    link(rel='stylesheet', href='/build/css/highUtil.min.css')
+    link(rel='stylesheet', href='build/css/highUtil.min.css')
     #map
+    .overlap
+         button.btn.btn-default.btn-backward.glyphicon.glyphicon-backward(aria-label="back") 
+         button.btn.btn-default.btn-play.glyphicon.glyphicon-play(aria-label="play") 
+         button.btn.btn-default.btn-forward.glyphicon.glyphicon-forward(aria-label="forward") 
+         button.btn.btn-default.btn-fast-forward.glyphicon.glyphicon-fast-forward(aria-label="fast-forward") 
     script(src='build/js/highUtil.min.js')  

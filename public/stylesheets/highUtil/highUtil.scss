@@ -1,5 +1,9 @@
 @import '../map/map';
+@import '../map/inputBtn.scss';
 
 #map {
     @extend #gmap;
+    .leaflet-control-zoom {
+        display: none;
+    }
 }
