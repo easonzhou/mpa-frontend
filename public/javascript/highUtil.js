@@ -5,6 +5,7 @@ require('heatmap.js');
 var HeatmapOverlay = require('leaflet-heatmap.js');
 var d3 = require('d3');
 
+
 function setupHeatMapLayer(data, maxValue) {
 	console.log("setupHeatMap");
 	var testData = {
