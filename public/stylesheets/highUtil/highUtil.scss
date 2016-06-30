@@ -2,4 +2,7 @@
 
 #map {
     @extend #gmap;
+    .leaflet-control-zoom {
+        display: none;
+    }
 }

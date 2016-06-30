@@ -96,3 +96,6 @@ html, body {
 
 .overlap:hover {
   left: 0; }
+
+#map .leaflet-control-zoom {
+  display: none; }
