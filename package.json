@@ -23,7 +23,8 @@
     "http": "0.0.0",
     "path": "^0.12.7",
     "heatmap.js": "^2.0.2",
-    "leaflet": "^0.7.7"
+    "leaflet": "^0.7.7",
+    "google-maps": "^3.2.1"
   },
   "devDependencies": {
     "webpack": "^1.13.1",
