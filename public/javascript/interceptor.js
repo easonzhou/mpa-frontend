@@ -2,7 +2,7 @@ var url = window.location.href;
 
 var $ = require('jquery');
 
-if(localStorage.length) {
+if (localStorage.length) {
     $('#login').text('Logout');
 } else {
     var paths = url.split('/');

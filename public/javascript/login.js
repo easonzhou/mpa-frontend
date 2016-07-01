@@ -9,7 +9,7 @@ function validate(){
     
     $.ajax({
         type : "POST",
-        url : "http://localhost:8080/SAFER_REST/checkLogin",
+        url : "/SAFER_REST/checkLogin",
         dataType: 'json',
         data: { userId : username, pass: password},
         success : function(data) {
