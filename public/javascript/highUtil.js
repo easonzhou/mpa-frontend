@@ -5,8 +5,6 @@ require('heatmap.js');
 var HeatmapOverlay = require('leaflet-heatmap.js');
 var d3 = require('d3');
 require("leaflet-heat.js");
-var SockJS = require("sockjs");
-//var Stomp = require('stompjs');
 
 function setupHeatMapLayerUsingHeatmapJS(data, maxValue) {
 	console.log("setupHeatMap");
@@ -55,26 +53,6 @@ function setupHeatMapLayerUsingHeatmapJS(data, maxValue) {
 	layer = heatmapLayer;
 }
 
-function setupHeatMapLayer(input, maxCount) {
-	var baseLayer = L.tileLayer(
-			'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
-			attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>',
-			maxZoom: 18
-			}
-	);
-
-	var map = new L.Map('map', {
-		//center: new L.LatLng(25.6586, -80.3568),
-		center: new L.LatLng(1.248646, 103.833332),
-		zoom: 12,
-		layers: [baseLayer]
-	});
-
-    var heat = L.heatLayer(input, {
-        radius: 50
-    }).addTo(map);
-}
-
 /*
 d3.csv('data/congestion_location_onetime.csv', function(data) {
 	var maxCount = 0; 
@@ -117,15 +95,53 @@ function setConnected(connected) {
       document.getElementById('response').innerHTML = '';*/
 }
 
+function setupHeatMapLayer(heat, map, input) { 
+    // set up heatmap layer: heat is the heatmaplayer, map is the map hander, and input is the input data
+    if (heat === null) {
+        heat = L.heatLayer(input, {
+            radius: 50
+        }).addTo(map);
+        console.log("heat setup");
+    } else {
+        heat.setLatLngs(input);
+        console.log("heat reset latlng");
+    }
+    return heat;
+}
+
+function setUpMap() { 
+    //set up base map for leaflet.heat
+    var baseLayer = L.tileLayer(
+            'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
+            attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>',
+            maxZoom: 18
+        }
+    );
+
+    var map = new L.Map('map', {
+        center: new L.LatLng(1.248646, 103.833332),
+        zoom: 12,
+        layers: [baseLayer]
+    });
+
+    return map;
+}
+
 function connect() {
     var socket = new SockJS('/SAFER_REST/vmimReal');
     stompClient = Stomp.over(socket);
+    var map = setUpMap();
+    var heat = null;
     stompClient.connect({}, function(frame) {
-        setConnected(true);
-        console.log('Connected: ' + frame);
+        //setConnected(true);
+        //console.log('Connected: ' + frame);
         stompClient.subscribe('/topic/vmim', function(vmim){
             var vmimJSON = JSON.parse(vmim.body);
-            console.log(vmimJSON);
+            var data = vmimJSON.vmimData.map(function (d) {
+                return [d.latDeg, d.longDeg];
+            });
+            console.log(data.length);
+            heat = setupHeatMapLayer(heat, map, data);
         });
     });
 }
@@ -138,4 +154,4 @@ function disconnect() {
     console.log("Disconnected");
 }
 
-//connect();
+connect();
