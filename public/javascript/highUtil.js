@@ -5,6 +5,8 @@ require('heatmap.js');
 var HeatmapOverlay = require('leaflet-heatmap.js');
 var d3 = require('d3');
 require("leaflet-heat.js");
+var SockJS = require("sockjs");
+//var Stomp = require('stompjs');
 
 function setupHeatMapLayerUsingHeatmapJS(data, maxValue) {
 	console.log("setupHeatMap");
@@ -73,9 +75,9 @@ function setupHeatMapLayer(input, maxCount) {
     }).addTo(map);
 }
 
+/*
 d3.csv('data/congestion_location_onetime.csv', function(data) {
-	var maxCount = 0;
-    /*
+	var maxCount = 0; 
 	for(var i = 0; i < data.length; i++) {
 		data[i]['count'] = parseFloat(data[i]['CumDensity']);
 		data[i]['lat'] = parseFloat(data[i]['lat']);
@@ -83,7 +85,6 @@ d3.csv('data/congestion_location_onetime.csv', function(data) {
 		if(data[i]['count'] > maxCount)
 			maxCount = data[i]['count'];
 	}
-    */
     var input = [];
 	for(var i = 0; i < data.length; i++) {
 		data[i]['count'] = parseFloat(data[i]['CumDensity']);
@@ -105,3 +106,36 @@ d3.csv('data/congestion_location_onetime.csv', function(data) {
 	setupHeatMapLayer(input, maxCount);
     //setupHeatMapLayerUsingHeatmapJS(data, maxCount);
 });
+*/
+
+var stompClient = null;
+
+function setConnected(connected) {
+    document.getElementById('connect').disabled = connected;
+    document.getElementById('disconnect').disabled = !connected;
+    /*document.getElementById('conversationDiv').style.visibility = connected ? 'visible' : 'hidden';
+      document.getElementById('response').innerHTML = '';*/
+}
+
+function connect() {
+    var socket = new SockJS('/SAFER_REST/vmimReal');
+    stompClient = Stomp.over(socket);
+    stompClient.connect({}, function(frame) {
+        setConnected(true);
+        console.log('Connected: ' + frame);
+        stompClient.subscribe('/topic/vmim', function(vmim){
+            var vmimJSON = JSON.parse(vmim.body);
+            console.log(vmimJSON);
+        });
+    });
+}
+
+function disconnect() {
+    if (stompClient != null) {
+        stompClient.disconnect();
+    }
+    setConnected(false);
+    console.log("Disconnected");
+}
+
+//connect();
