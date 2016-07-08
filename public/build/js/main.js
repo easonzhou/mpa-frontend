@@ -816,6 +816,7 @@ $('#login').click(function() {
 var $ = require('jquery');
 $('form').submit(false);
 
+
  
 //Below function Executes on click of login button
 function validate(){
@@ -836,7 +837,22 @@ function validate(){
             if( data.isValidLogin == true ) {
                 localStorage.setItem('userId', data.userId);
                 localStorage.setItem('userModules', data.userModules);
-		        window.location = "map.html"; //redirecting to other page
+                localStorage.setItem('userRole', data.userRole);
+                switch(data.userRole)
+                {
+                    case "ADMIN":
+		                window.location = "map.html"; //redirecting to other page
+                        break;
+                    case "OPER":
+		                window.location = "eta.html"; //redirecting to other page
+                        break;
+                    case "ANALYST":
+		                window.location = "highUtil.html"; //redirecting to other page
+                        break;
+                    default:
+		                window.location = "map.html"; //redirecting to other page
+                }
+                
 		        return false;
             } else {
                 $(".alert-warning").show("slow");
