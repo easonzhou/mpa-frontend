@@ -716,23 +716,7 @@ var HeatmapOverlay = require('leaflet-heatmap.js');
 var d3 = require('d3');
 require("leaflet-heat.js");
 
-<<<<<<< HEAD
 function initiateHeatMapLayer () {
-=======
-function setupHeatMapLayerUsingHeatmapJS(data, maxValue) {
-	console.log("setupHeatMap");
-	var testData = {
-		max: maxValue,
-		data: data
-	};
-	var baseLayer = L.tileLayer(
-			'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
-			attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>',
-			maxZoom: 18
-			}
-	);
-
->>>>>>> leaflet.heat
 	var cfg = {
 		// radius should be small ONLY if scaleRadius is true (or small radius is intended)
 		"radius": .01,
@@ -771,6 +755,7 @@ function heatMapDataHelper(data) {
     return testData;
 }
 
+/*
 d3.csv('data/congestion_location.csv', function(data) {
     var timeIndex = 0;
     var heatmapLayer = initiateHeatMapLayer();
@@ -803,7 +788,6 @@ d3.csv('data/congestion_location.csv', function(data) {
 
 	heatmapLayer.setData(heatMapDataHelper(stData[timeIndex]));
 
-<<<<<<< HEAD
     setInterval(function(d){
         timeIndex++;
         if (timeIndex > stData.length - 1)
@@ -812,8 +796,6 @@ d3.csv('data/congestion_location.csv', function(data) {
     }, 1000);
 });
 
-=======
-/*
 d3.csv('data/congestion_location_onetime.csv', function(data) {
 	var maxCount = 0; 
 	for(var i = 0; i < data.length; i++) {
@@ -872,8 +854,8 @@ function setupHeatMapLayer(heat, map, input) {
 function setUpMap() { 
     //set up base map for leaflet.heat
     var baseLayer = L.tileLayer(
-            'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
-            attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>',
+            'http://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}',{
+            attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ',
             maxZoom: 18
         }
     );
@@ -915,7 +897,6 @@ function disconnect() {
 }
 
 connect();
->>>>>>> leaflet.heat
 
 var url = window.location.href;
 
