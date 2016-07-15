@@ -311,6 +311,7 @@ html, body {
   cursor: pointer; }
 
 .leaflet-container {
+  cursor: -webkit-grab;
   cursor: -moz-grab; }
 
 .leaflet-popup-pane,
@@ -320,6 +321,7 @@ html, body {
 .leaflet-dragging .leaflet-container,
 .leaflet-dragging .leaflet-clickable {
   cursor: move;
+  cursor: -webkit-grabbing;
   cursor: -moz-grabbing; }
 
 /* visual tweaks */

@@ -102,13 +102,13 @@ gulp.task('lint', function(cb, err) {
 });
 
 gulp.task('default',['clean', 'lint'],function(){
-  gulp.start('login_styles','layout_styles','map_styles', 'highUtil_styles', 'scripts','templates');
+  gulp.start('login_styles','layout_styles','map_styles', 'highUtil_styles', 'templates');
   //gulp.start('styles','templates');
 })
 
 
 gulp.task('watch',function(){
-  gulp.start('login_styles','layout_styles','map_styles', 'highUtil_styles', 'scripts','templates');
+  gulp.start('login_styles','layout_styles','map_styles', 'highUtil_styles', 'templates');
   gulp.watch('./public/stylesheets/layout/*.scss',['layout_styles']);
   gulp.watch('./public/stylesheets/login/*.scss',['login_styles']);
   gulp.watch('./public/stylesheets/map/*.scss',['map_styles']);
