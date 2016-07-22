@@ -2,12 +2,10 @@ extends layouts/layout.jade
 
 block con
     link(rel='stylesheet', href='build/css/highUtil.min.css')
+    .loading
     #map
-    .overlap
-         button.btn.btn-default.btn-backward.glyphicon.glyphicon-backward(aria-label="back") 
-         button.btn.btn-default.btn-play.glyphicon.glyphicon-play(aria-label="play") 
-         button.btn.btn-default.btn-forward.glyphicon.glyphicon-forward(aria-label="forward") 
-         button.btn.btn-default.btn-fast-forward.glyphicon.glyphicon-fast-forward(aria-label="fast-forward") 
+    .overlapSlider
+         #sliderVis
     script(src='build/js/highUtil.min.js')  
 //    script(src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.1/sockjs.min.js")
 //    script(src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js")

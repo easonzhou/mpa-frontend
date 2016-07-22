@@ -3,7 +3,9 @@ $('.title').text('High Utilization');
 require('leaflet');
 var d3 = require('d3');
 require("leaflet.heat");
+var vis = require('vis');
 
+var heat = null;
 function setupHeatMapLayer(heat, map, input) { 
     // set up heatmap layer: heat is the heatmaplayer, map is the map hander, and input is the input data
     if (heat === null) {
@@ -34,6 +36,39 @@ function setUpMap() {
     });
 
     return map;
+}
+var arrItems = [
+		{id: 1, content: '08:00~09:00 2015-10-29', start: '2015-10-29 08:00:00', end: '2015-10-29 09:00:00'},
+		{id: 2, content: '09:00~10:00 2015-10-29', start: '2015-10-29 09:00:00', end: '2015-10-29 10:00:00'},
+		{id: 3, content: '10:00~11:00 2015-10-29', start: '2015-10-29 10:00:00', end: '2015-10-29 11:00:00'},
+		{id: 4, content: '11:00~12:00 2015-10-29', start: '2015-10-29 11:00:00', end: '2015-10-29 12:00:00'},
+		{id: 5, content: '12:00~13:00 2015-10-29', start: '2015-10-29 12:00:00', end: '2015-10-29 13:00:00'},
+		{id: 6, content: '13:00~14:00 2015-10-29', start: '2015-10-29 13:00:00', end: '2015-10-29 14:00:00'},
+		{id: 7, content: '14:00~15:00 2015-10-29', start: '2015-10-29 14:00:00', end: '2015-10-29 15:00:00'},
+		{id: 8, content: '15:00~16:00 2015-10-29', start: '2015-10-29 15:00:00', end: '2015-10-29 16:00:00'},
+		{id: 9, content: '16:00~17:00 2015-10-29', start: '2015-10-29 16:00:00', end: '2015-10-29 17:00:00'},
+		{id: 10, content: '17:00~18:00 2015-10-29', start: '2015-10-29 17:00:00', end: '2015-10-29 18:00:00'},
+		{id: 11, content: '18:00~19:00 2015-10-29', start: '2015-10-29 18:00:00', end: '2015-10-29 19:00:00'},
+		{id: 12, content: '19:00~20:00 2015-10-29', start: '2015-10-29 19:00:00', end: '2015-10-29 20:00:00'},
+]
+// Create a DataSet (allows two way data-binding)
+var items = new vis.DataSet(arrItems);
+
+function setUpSlider() {
+	// DOM element where the Timeline will be attached
+	var container = document.getElementById('sliderVis');
+
+	// Configuration for the Timeline
+	var options = {};
+
+	// Create a Timeline
+	var timeline = new vis.Timeline(container, items, options);
+	timeline.setSelection([1]);
+	timeline.on('select', function (properties) {
+		var startTime = arrItems[properties.items[0] - 1].start;
+		var endTime = arrItems[properties.items[0] - 1].end;
+		showHeatMap(startTime, endTime);
+	});
 }
 
 /*
@@ -80,25 +115,31 @@ function disconnect() {
 connect();
 */
 
+function showHeatMap(startTime, endTime) {
+	spinner.show();
+	$.ajax({
+		type : "POST",
+		url : "/SAFER_REST/getHighUtilData",
+		dataType: 'json',
+		data: { startLogtime : startTime, endLogtime: endTime},
+		success : function(data) {
+			spinner.hide();
+			var len = data.length;				
+			if(len == 0) {
+				alert("No VMIM Data");
+			}
+			data = data.map(obj => d3.values(obj))
+				.map(arr => [arr[1], arr[0]]);
+			heat = setupHeatMapLayer(heat, map, data);
+		},
+		error: function( data ){
+			spinner.hide();
+			alert("Error fetching VMIM data " + data.responseText);
+		},
+		async: true
+	});
+}
 var map = setUpMap();
-
-$.ajax({
-    type : "POST",
-    url : "/SAFER_REST/getHighUtilData",
-    dataType: 'json',
-    data: { startLogtime : '2015-10-29 08:00:00', endLogtime: '2015-10-29 09:00:00'},
-    success : function(data) {
-        var len = data.length;				
-        if(len == 0) {
-            alert("No VMIM Data");
-        }
-        data = data.map(obj => d3.values(obj))
-                   .map(arr => [arr[1], arr[0]]);
-        var heat = setupHeatMapLayer(null, map, data);
-    },
-    error: function( data ){
-        alert("Error fetching VMIM data " + data.responseText);
-    },
-    async: true
-});
-
+var spinner = $('.loading');
+setUpSlider();
+showHeatMap('2015-10-29 08:00:00', '2015-10-29 09:00:00');
