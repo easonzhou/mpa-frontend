@@ -82,7 +82,8 @@ gulp.task('templates', function() {
 
     gulp.src('./public/views/**/*.jade')
     .pipe(jade({
-        locals: YOUR_LOCALS
+        locals: YOUR_LOCALS,
+        pretty: true
     }))
     .pipe(gulp.dest('./public/'))
     .pipe(notify("Templates task complete"))
