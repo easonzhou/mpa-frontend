@@ -12,6 +12,8 @@ module.exports = {
       highUtil: "./javascript/highUtil.js",
       eta: "./javascript/eta.js",
       interceptor: "./javascript/interceptor.js",
+      transponderAnalytics: "./javascript/transponderAnalytics.js",
+      speedAnalytics: "./javascript/speedAnalytics.js",
   },
   output: {
     path: __dirname + "/public/build/js",
