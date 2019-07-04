@@ -3,7 +3,9 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "node app.js"
+    "start": "node app.js",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "dependencies": {
     "express": "4.16.0",
@@ -27,7 +29,8 @@
     "sockjs": "^0.3.17",
     "stompjs": "^2.3.3",
     "leaflet.heat": "git+ssh://git@github.com:Leaflet/Leaflet.heat.git#v0.2.0",
-    "vis": "^4.16.1"
+    "vis": "^4.16.1",
+    "snyk": "^1.189.0"
   },
   "devDependencies": {
     "webpack": "^1.13.1",
@@ -60,5 +63,6 @@
   "repository": {},
   "engines": {
     "node": "4.2.x"
-  }
+  },
+  "snyk": true
 }
