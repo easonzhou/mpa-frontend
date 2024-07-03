@@ -12,7 +12,7 @@
     "compression": "*",
     "multer": "*",
     "fs": "*",
-    "del": "~1.2.1",
+    "del": "~2.0.0",
     "marked": "~0.3.5",
     "jstransformer-marked": "~1.0.1",
     "jquery": "^3.0.0",
